@@ -28,11 +28,9 @@ function TasksDiplay({tasks,update, complete, deletef, completed,deleteC, undo, 
         const JSXtasks =  tasks.map((element)=>{
 
             if(editKey===element.key){
-
-
                 return <div key={editKey} className="border p-2 font-bold flex">Task:<br/>
                 <form onSubmit={(event)=>{event.preventDefault();updateValue();}}>
-                <InputBox onChange={(event)=>{setEditValue(event.target.value)}}> Type here</InputBox>
+                <InputBox onChange={(event)=>{setEditValue(event.target.value)}}> {editValue}</InputBox>
                 <Button onClick={()=>{updateValue();}}>Save</Button>
                 </form>
                 </div>
@@ -51,9 +49,10 @@ function TasksDiplay({tasks,update, complete, deletef, completed,deleteC, undo, 
        const JSXcompletedTask = completed.map((element)=>{
 
         if(editKey===element.key){
+
             return <div key={editKey} className="border p-2 font-bold flex">Task:<br/>
             <form onSubmit={(event)=>{event.preventDefault();udpateCompletedTask();}}>
-            <InputBox onChange={(event)=>{setEditValue(event.target.value)}}> Type here</InputBox>
+            <InputBox onChange={(event)=>{setEditValue(event.target.value)}}> {editValue}</InputBox>
             <Button onClick={()=>{udpateCompletedTask();}}>Save</Button>
             </form>
             </div>

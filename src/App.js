@@ -87,7 +87,6 @@ function App(){
     const EditTheCompletedTask = (key,value) =>{
         console.log('this is the EditTheCompletedTask function in the App.js');
         console.log('we received udpated request with the key', key, ' and value of ', value);
-
         
         const newTasks = completed.map((t)=>{
             if(key===t.key){return {key:t.key, value}}
@@ -95,8 +94,7 @@ function App(){
                 return t;
             }
         });
-        setCompleted(newTasks);
-        
+        setCompleted(newTasks);   
     }
 
 /*--------------------------------------------------------------------------- */
