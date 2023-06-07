@@ -69,10 +69,11 @@ function App(){
     return <div >
             <div id="ModalReceiver"></div>
             <Heading body={body} flip={ChangeBody}/>
-            <AddTask tasks={tasks} add={AddPendingTask}/>
+            <div className="border w-3/4 rounded">
+            <AddTask tasks={tasks} add={AddPendingTask} className="items-center justify-center"/>
             <BodyDisplay update={EditPendingTask} deletef={deletePendingTask} complete={CompleteTheTask} tasks={tasks} completed={completed} 
-            deleteC={deleteOneCompletedTask} undo={AssignBackToPending} updateC = {EditTheCompletedTask}/>
-            </div>
+            deleteC={deleteOneCompletedTask} undo={AssignBackToPending} updateC = {EditTheCompletedTask} className="items-center justify-center"/>
+            </div></div>
   
 }
 

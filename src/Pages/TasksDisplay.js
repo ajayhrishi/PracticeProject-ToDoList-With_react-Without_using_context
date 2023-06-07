@@ -39,9 +39,9 @@ function TasksDiplay({tasks,update, complete, deletef, completed,deleteC, undo, 
                 </div>
             }
 
-            return <div className="border p-1 font-bold flex" key={element.id}> 
-            <div className="flex ">
-            <div className=" my-4 justify-end" >{element.value}</div>
+            return <div className="p-1 font-bold flex" key={element.id}> 
+            <div className="my-4 justify-end ">
+            <div className=" flex ml-auto my-2" >{element.value}</div>
             <div className={iconClass} onClick={()=>{complete(element.id)}}><AiFillCheckCircle/></div>
             <div className={iconClass} onClick={()=>{Editor(element.id)}}><AiFillEdit/></div>
             <div className={iconClass} onClick={()=>{deletef(element.id)}}><AiFillCloseSquare/></div>
@@ -60,23 +60,23 @@ function TasksDiplay({tasks,update, complete, deletef, completed,deleteC, undo, 
             </form>
             </div>
         }
-        return <div className="border p-1 font-bold flex" key={element.id}> <div className="flex ">
+        return <div className="p-1 font-bold line-through" key={element.id}> <div className="flex ">
         <div className=" my-4 justify-end" >{element.value}</div>
+        <div className="flex ml-auto my-2">
         <div className={iconClass} onClick={()=>{undo(element.id)}}><AiOutlineUndo/></div>
         <div className={iconClass} onClick={()=>{Editor(element.id+"c")}}><AiFillEdit/></div>
         <div className={iconClass} onClick={()=>{deleteC(element.id)}}><AiFillCloseSquare/></div>
-    </div>  
+    </div>  </div>
     </div>  
        });
     /*-------------- Elements that will be returning as JSX elements -------------------- */
 
-    return <div>
- 
-        <div className="bg-orange-300 mt-10">
+    return <div className=" ml-24 justify-center">
+        <div className="bg-orange-300 mt-10 w-1/2 rounded">
         {[...JSXtasks]}
         </div>
         
-        <div className="bg-green-300 mt-20">
+        <div className="bg-green-300 mt-20 w-1/2 rounded justify-center">
         {[...JSXcompletedTask] }   
         </div>   
     </div>
