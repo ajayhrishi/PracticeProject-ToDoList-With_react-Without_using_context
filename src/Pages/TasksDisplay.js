@@ -79,6 +79,7 @@ function TasksDiplay({tasks,update, complete, deletef, completed,deleteC, undo, 
         <div className="bg-green-300 mt-20 w-1/2 rounded justify-center">
         {[...JSXcompletedTask] }   
         </div>   
+        <div></div>
     </div>
 }
 
