@@ -1,100 +1,67 @@
 import Heading from "./Pages/Heading";
 import AddTask from "./Pages/AddTaks";
 import BodyDisplay from "./Pages/BodyDisplay";
-import { useState } from "react";
+import { useEffect, useState} from "react";
+
+import axios from "axios";
+
 
 function App(){
+
+    useEffect( ()=>{fetchTasks();},[]);
+
     const [body,setBody]= useState("Tasks");
     const [tasks,setTasks] = useState([]);
     const [completed,setCompleted] = useState([]);
 
+    async function fetchTasks (){
 
+        let TasksSeverData = await axios.get('http://localhost:3005/tasks/');
+        let CompletedTasks = await axios.get('http://localhost:3005/completedTasks/');
+        TasksSeverData = [...TasksSeverData.data];
+        CompletedTasks = [...CompletedTasks.data];
+        setTasks(TasksSeverData);
+        setCompleted(CompletedTasks);
+    }
 
     const ChangeBody = (element)=>{
         setBody(element);
     }
-    /*----------------Task Operations ------------------------*/
-    const AddPendingTask = (element) =>{
-        setTasks(element);
-    }
-    const deletePendingTask = (key) =>{
-        const newTasks = tasks.filter((task)=>{
-            if(key!==task.key){
-                return task;
-            }
-            return null;
-        });
-        setTasks(newTasks);
+    /*----------------Task's Operations ------------------------*/
+    const AddPendingTask = async(TaskToAdd) => {
+       await axios.post("http://localhost:3005/tasks/",{"value":TaskToAdd});
+       fetchTasks();
     }
 
-    const EditPendingTask = (key,value) =>{
-        console.log('this is the EditTask function in the App.js');
-        console.log('we received udpated request with the key', key, ' and value of ', value);
-
-        
-        const newTasks = tasks.map((t)=>{
-            if(key===t.key){return {key:t.key, value}}
-            else{
-                return t;
-            }
-        });
-        setTasks(newTasks);
-        
+    const EditPendingTask = async (id,value) => {
+      await axios.put("http://localhost:3005/tasks/"+id,{value:value});
+      fetchTasks();
     }
 
-
-    
-/*----------------Function to handle the Operations on the Completed Tasks ------------------------*/
-    const CompleteTheTask = (key) =>{
-        const t = tasks.filter((task)=>{
-            if(key===task.key){
-                console.log(task, 'is selected as completed');
-                return task;
-            }
-            return null;
-        });
-        deletePendingTask(key);
-        const completedTask = [...completed,...t];
-        setCompleted(completedTask);
-        return;
+    const deletePendingTask = async(id) => {
+        await axios.delete("http://localhost:3005/tasks/"+id);
+        fetchTasks();
     }
-
-    const deleteOneCompletedTask = (key) =>{
-        const t = completed.filter((task)=>{
-            if(key!==task.key){
-                return task;
-            }
-            return null;
-        });
-        setCompleted(t);
+/*----------------Completed Task's Operations ------------------------*/
+    const CompleteTheTask = async(id) => {
+        let data = await axios.get("http://localhost:3005/tasks/"+id); data = data.data;
+        await axios.delete("http://localhost:3005/tasks/"+id);
+        await axios.post("http://localhost:3005/completedTasks/",data);
+        fetchTasks();
     }
-
-    const AssignBackToPending = (key) => {
-        const t = completed.filter((task)=>{
-            if(key===task.key){
-                return task;
-            }
-            return null;
-        });
-
-        deleteOneCompletedTask(key);
-
-        const newTask = [...tasks,...t]
-        setTasks(newTask);
+    const deleteOneCompletedTask = async(id) => {
+        await axios.delete("http://localhost:3005/completedTasks/"+id);
+        fetchTasks();
     }
-
-
-    const EditTheCompletedTask = (key,value) =>{
-        console.log('this is the EditTheCompletedTask function in the App.js');
-        console.log('we received udpated request with the key', key, ' and value of ', value);
-        
-        const newTasks = completed.map((t)=>{
-            if(key===t.key){return {key:t.key, value}}
-            else{
-                return t;
-            }
-        });
-        setCompleted(newTasks);   
+    const AssignBackToPending = async(id) => {
+        let data = await axios.get("http://localhost:3005/completedTasks/"+id); data = data.data;
+        await axios.delete("http://localhost:3005/completedTasks/"+id);
+        await axios.post("http://localhost:3005/tasks/",data);
+        fetchTasks();
+    }
+    const EditTheCompletedTask = async(id,value) => {
+        await axios.put("http://localhost:3005/completedTasks/"+id,{value:value});
+        fetchTasks();
     }
 
 /*--------------------------------------------------------------------------- */

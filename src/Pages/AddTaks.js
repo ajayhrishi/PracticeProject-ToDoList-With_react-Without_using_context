@@ -2,7 +2,7 @@ import Button from "../components/Button";
 import InputBox from "../components/InputBox";
 import { useState } from "react";
 
-function AddTask({tasks,add,className,...rest}){
+function AddTask({add,className,...rest}){
 
     const [capturing,setCapturing]= useState('');
 
@@ -12,10 +12,7 @@ function AddTask({tasks,add,className,...rest}){
     }
 
     const updateTasks = () =>{
-        let key = Math.floor(Math.random()*9999)+capturing.slice(0,3);
-        const newElement = {key, value:capturing,};
-        const newTasks = [...tasks,newElement];
-        add(newTasks);
+        add(capturing);
         setCapturing('');
     }
 
